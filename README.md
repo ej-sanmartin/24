@@ -1,5 +1,7 @@
 # 24 - An AI Interrogation Experience
 
+![24 gameplay, interrogation with AI generated case.](assets/24-preview.png)
+
 An interactive detective game where you have 24 prompts to interrogate an AI 
 suspect and extract a confession.
 
