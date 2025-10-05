@@ -7,8 +7,8 @@ export default function TitleScreen() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex flex-col items-center
-      justify-center relative">
+    <div className="h-screen flex flex-col items-center
+      justify-center relative overflow-hidden">
       <div className="text-center space-y-12">
         <h1 className="text-[12rem] font-bold tracking-wider
           text-shadow-glow animate-pulse-slow">

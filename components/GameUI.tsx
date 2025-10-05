@@ -32,14 +32,14 @@ export default function GameUI({
 
   if (gameState.showSmileFlash) {
     return (
-      <div className="min-h-screen flex items-center
-        justify-center bg-black">
+      <div className="h-screen flex items-center
+        justify-center bg-black overflow-hidden">
         <Image
           src="/portraits/smiling.png"
           alt="Smiling"
-          width={500}
-          height={500}
-          className="w-[500px] h-auto animate-flash"
+          width={400}
+          height={400}
+          className="w-[400px] h-auto animate-flash"
         />
       </div>
     );
@@ -47,8 +47,8 @@ export default function GameUI({
 
   if (gameState.gameStatus === 'lost') {
     return (
-      <div className="min-h-screen flex flex-col items-center
-        justify-center space-y-8">
+      <div className="h-screen flex flex-col items-center
+        justify-center space-y-8 overflow-hidden">
         <div className="text-6xl font-bold text-red-500
           animate-pulse-slow">
           he got away.
@@ -66,8 +66,8 @@ export default function GameUI({
 
   if (gameState.gameStatus === 'won') {
     return (
-      <div className="min-h-screen flex flex-col items-center
-        justify-center space-y-8">
+      <div className="h-screen flex flex-col items-center
+        justify-center space-y-8 overflow-hidden">
         <div className="text-4xl font-light text-white animate-pulse-slow">
           a game by{' '}
           <a
@@ -91,7 +91,8 @@ export default function GameUI({
   }
 
   return (
-    <div className="min-h-screen flex flex-col py-8 px-4 relative">
+    <div className="h-screen flex flex-col py-4 px-4 relative
+      overflow-hidden">
       <StickyNote
         name={gameState.name}
         crimeSpec={gameState.crimeSpec}
@@ -99,18 +100,18 @@ export default function GameUI({
       />
 
       <div className="flex-1 flex flex-col items-center
-        justify-start space-y-8 max-w-4xl mx-auto w-full pt-8">
+        justify-center space-y-4 max-w-4xl mx-auto w-full">
         <Portrait emotion={gameState.currentEmotion} />
 
-        <div className="bg-gray-900/80 rounded-lg p-6
-          min-h-[120px] max-w-2xl w-full
+        <div className="bg-gray-900/80 rounded-lg p-4
+          min-h-[100px] max-w-2xl w-full
           border border-gray-500 shadow-xl">
-          <p className="text-lg leading-relaxed text-gray-100">
+          <p className="text-base leading-relaxed text-gray-100">
             {gameState.lastReply}
           </p>
         </div>
 
-        <div className="w-full max-w-2xl space-y-4">
+        <div className="w-full max-w-2xl space-y-2">
           <form onSubmit={handleSubmit} className="w-full">
             <input
               type="text"
@@ -118,7 +119,7 @@ export default function GameUI({
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isSubmitting}
               placeholder="Type your next line..."
-              className="w-full px-6 py-4 text-lg bg-gray-800
+              className="w-full px-4 py-3 text-base bg-gray-800
                 text-white border-2 border-gray-500
                 focus:border-gray-300 focus:outline-none
                 transition-colors disabled:opacity-50"

@@ -132,7 +132,8 @@ export default function PlayPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center 
+        overflow-hidden">
         <div className="text-2xl text-white/60">Loading...</div>
       </div>
     );
@@ -140,7 +141,8 @@ export default function PlayPage() {
 
   if (!gameState) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center
+        overflow-hidden">
         <div className="text-2xl text-red-500">Failed to load game</div>
       </div>
     );
