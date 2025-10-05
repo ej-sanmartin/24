@@ -86,11 +86,14 @@ function parseResponse(text: string): {
 
     try {
       const meta = JSON.parse(jsonStr);
+      const confessionProgressValue =
+        meta.confession_progress ?? meta.confessionProgress ?? 0;
+
       return {
         response: textBeforeJson || 'I have nothing more to say.',
         meta: {
           next_emotion: meta.next_emotion || 'neutral',
-          confession_progress: meta.confession_progress || 0,
+          confession_progress: confessionProgressValue,
         },
       };
     } catch (e) {
