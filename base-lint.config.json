@@ -1,0 +1,10 @@
+{
+  "mode": "diff",
+  "treatNewlyAs": "warn",
+  "maxLimited": 0,
+  "strict": false,
+  "targets": "all",
+  "suppress": [],
+  "include": [],
+  "ignore": []
+}
