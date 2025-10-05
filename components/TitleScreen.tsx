@@ -1,11 +1,6 @@
-'use client';
-
 import Link from 'next/link';
-import {useRouter} from 'next/navigation';
 
 export default function TitleScreen() {
-  const router = useRouter();
-
   return (
     <div className="h-screen flex flex-col items-center
       justify-center relative overflow-hidden">
@@ -19,8 +14,8 @@ export default function TitleScreen() {
           24
         </h1>
 
-        <button
-          onClick={() => router.push('/play')}
+        <Link
+          href="/play"
           className="px-12 py-4 text-2xl font-semibold
             bg-white text-black hover:bg-gray-200
             transition-colors duration-200
@@ -29,7 +24,7 @@ export default function TitleScreen() {
             max-md:px-8 max-md:py-3 max-md:text-xl max-md:border-3"
         >
           PLAY
-        </button>
+        </Link>
       </div>
 
       <div className="fixed bottom-8 right-8 text-right
