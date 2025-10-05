@@ -1,5 +1,15 @@
-import { ChatMessage, ChatOptions, ChatResult, ProviderClient } from '../types';
-import { AI_API_KEY, AI_MODEL, AI_TEMPERATURE, AI_MAX_TOKENS } from '../env';
+import {
+  ChatMessage,
+  ChatOptions,
+  ChatResult,
+  ProviderClient,
+} from '../types';
+import {
+  AI_API_KEY,
+  AI_MODEL,
+  AI_TEMPERATURE,
+  AI_MAX_TOKENS,
+} from '../env';
 
 /** Groq uses an OpenAI-compatible endpoint at:
  *  https://api.groq.com/openai/v1/chat/completions
@@ -30,7 +40,7 @@ export class GroqClient implements ProviderClient {
     const res = await fetch(GROQ_URL, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${AI_API_KEY}`,
+        'Authorization': `Bearer ${AI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -38,7 +48,7 @@ export class GroqClient implements ProviderClient {
         temperature,
         max_tokens: maxTokens,
         messages,
-        ...(options?.stop ? { stop: options.stop } : {}),
+        ...(options?.stop ? {stop: options.stop} : {}),
       }),
     });
 
@@ -49,6 +59,6 @@ export class GroqClient implements ProviderClient {
 
     const data: GroqChatResponse = await res.json();
     const text = data.choices?.[0]?.message?.content ?? '';
-    return { text };
+    return {text};
   }
 }

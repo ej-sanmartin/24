@@ -5,9 +5,9 @@ interface PromptData {
   motiveKnown: boolean;
   opportunityKnown: boolean;
   inconsistencyFound: boolean;
-  confession_progress: number;
-  current_emotion: string;
-  accusation_gate: boolean;
+  confessionProgress: number;
+  currentEmotion: string;
+  accusationGate: boolean;
 }
 
 /**
@@ -18,15 +18,15 @@ interface PromptData {
  */
 export function buildSystemPrompt(data: PromptData): string {
   const {
-    name, 
-    crimeSpec, 
-    alibiSpec, 
-    motiveKnown, 
+    name,
+    crimeSpec,
+    alibiSpec,
+    motiveKnown,
     opportunityKnown,
-    inconsistencyFound, 
-    confession_progress, 
-    current_emotion, 
-    accusation_gate,
+    inconsistencyFound,
+    confessionProgress,
+    currentEmotion,
+    accusationGate,
   } = data;
 
   return `You are ${name.first} ${name.last}, a murder suspect in a police 
@@ -57,18 +57,18 @@ Rules:
 - Always respond IN CHARACTER as ${name.first} ${name.last}.
 - Always include a final JSON footer on a new line:
   {"next_emotion":"one of [neutral,evasive,defensive,anxious,resigned,
-confessing]","confession_progress":<0-100 integer>}
-- Confession may ONLY occur when confession_progress ≥ 96 AND 
-accusation_gate === true. Otherwise remain resigned or evasive.
-- If the detective's approach weakens, reduce confession_progress by 5–15.
-- Increase confession_progress by 8-15 if detective makes strong logical 
+confessing]","confessionProgress":<0-100 integer>}
+- Confession may ONLY occur when confessionProgress ≥ 96 AND 
+accusationGate === true. Otherwise remain resigned or evasive.
+- If the detective's approach weakens, reduce confessionProgress by 5–15.
+- Increase confessionProgress by 8-15 if detective makes strong logical 
 points, finds inconsistencies, or applies effective pressure.
 - Only use "confessing" emotion when you actually confess.
 
-Current emotional state: ${current_emotion}
-Current confession_progress: ${confession_progress}
+Current emotional state: ${currentEmotion}
+Current confessionProgress: ${confessionProgress}
 Motive known: ${motiveKnown}
 Opportunity known: ${opportunityKnown}
 Inconsistency found: ${inconsistencyFound}
-Accusation gate: ${accusation_gate}`;
+Accusation gate: ${accusationGate}`;
 }

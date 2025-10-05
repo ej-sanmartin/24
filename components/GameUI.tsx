@@ -4,6 +4,7 @@ import {useState} from 'react';
 import type {GameState} from '@/app/play/page';
 import Portrait from './Portrait';
 import StickyNote from './StickyNote';
+import Image from 'next/image';
 
 interface GameUIProps {
   gameState: GameState;
@@ -12,8 +13,8 @@ interface GameUIProps {
 }
 
 export default function GameUI({
-  gameState, 
-  onPlayerInput, 
+  gameState,
+  onPlayerInput,
   onBackToTitle,
 }: GameUIProps) {
   const [inputValue, setInputValue] = useState('');
@@ -31,9 +32,9 @@ export default function GameUI({
 
   if (gameState.showSmileFlash) {
     return (
-      <div className="min-h-screen flex items-center 
+      <div className="min-h-screen flex items-center
         justify-center bg-black">
-        <img
+        <Image
           src="/portraits/smiling.png"
           alt="Smiling"
           className="w-[500px] h-auto animate-flash"
@@ -44,14 +45,14 @@ export default function GameUI({
 
   if (gameState.gameStatus === 'lost') {
     return (
-      <div className="min-h-screen flex flex-col items-center 
+      <div className="min-h-screen flex flex-col items-center
         justify-center space-y-8">
         <div className="text-6xl font-bold text-red-500">
           he got away.
         </div>
         <button
           onClick={onBackToTitle}
-          className="px-8 py-3 text-xl bg-white text-black 
+          className="px-8 py-3 text-xl bg-white text-black
             hover:bg-gray-200 transition-colors"
         >
           Back to Title
@@ -62,7 +63,7 @@ export default function GameUI({
 
   if (gameState.gameStatus === 'won') {
     return (
-      <div className="min-h-screen flex flex-col items-center 
+      <div className="min-h-screen flex flex-col items-center
         justify-center space-y-8">
         <div className="text-4xl font-light text-white">
           a game by{' '}
@@ -77,7 +78,7 @@ export default function GameUI({
         </div>
         <button
           onClick={onBackToTitle}
-          className="px-8 py-3 text-xl bg-white text-black 
+          className="px-8 py-3 text-xl bg-white text-black
             hover:bg-gray-200 transition-colors"
         >
           Back to Title
@@ -94,12 +95,12 @@ export default function GameUI({
         alibiSpec={gameState.alibiSpec}
       />
 
-      <div className="flex-1 flex flex-col items-center 
+      <div className="flex-1 flex flex-col items-center
         justify-start space-y-8 max-w-4xl mx-auto w-full pt-8">
         <Portrait emotion={gameState.currentEmotion} />
 
-        <div className="bg-gray-900/80 rounded-lg p-6 
-          min-h-[120px] max-w-2xl w-full 
+        <div className="bg-gray-900/80 rounded-lg p-6
+          min-h-[120px] max-w-2xl w-full
           border border-gray-700 shadow-xl">
           <p className="text-lg leading-relaxed text-gray-100">
             {gameState.lastReply}
@@ -114,9 +115,9 @@ export default function GameUI({
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isSubmitting}
               placeholder="Type your next line..."
-              className="w-full px-6 py-4 text-lg bg-gray-800 
-                text-white border-2 border-gray-600 
-                focus:border-white focus:outline-none 
+              className="w-full px-6 py-4 text-lg bg-gray-800
+                text-white border-2 border-gray-600
+                focus:border-white focus:outline-none
                 transition-colors disabled:opacity-50"
             />
           </form>
@@ -128,7 +129,7 @@ export default function GameUI({
       </div>
 
       {process.env.NODE_ENV === 'development' && (
-        <div className="fixed bottom-4 left-4 text-xs 
+        <div className="fixed bottom-4 left-4 text-xs
           text-white/30 space-y-1">
           <div>Progress: {gameState.confessionProgress}</div>
           <div>Emotion: {gameState.currentEmotion}</div>

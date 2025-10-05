@@ -1,8 +1,21 @@
-import { ChatMessage, ChatOptions, ChatResult, ProviderClient } from '../types';
-import { AI_API_KEY, AI_API_URL, AI_MODEL, AI_TEMPERATURE, AI_MAX_TOKENS } from '../env';
+import {
+  ChatMessage,
+  ChatOptions,
+  ChatResult,
+  ProviderClient,
+} from '../types';
+import {
+  AI_API_KEY,
+  AI_API_URL,
+  AI_MODEL,
+  AI_TEMPERATURE,
+  AI_MAX_TOKENS,
+} from '../env';
 
-/** Generic OpenAI-compatible client (e.g., Meta Llama API later).
- *  Expect a Chat Completions schema at AI_API_URL (e.g. https://api.llama.com/v1/chat/completions)
+/**
+ * Generic OpenAI-compatible client (e.g., Meta Llama API).
+ * Expects Chat Completions schema at AI_API_URL.
+ * Example: https://api.llama.com/v1/chat/completions
  */
 const DEFAULT_MODEL = 'llama-3.1-8b-instruct';
 
@@ -29,7 +42,7 @@ export class OpenAICompatClient implements ProviderClient {
     const res = await fetch(url, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${AI_API_KEY}`,
+        'Authorization': `Bearer ${AI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -37,7 +50,7 @@ export class OpenAICompatClient implements ProviderClient {
         temperature,
         max_tokens: maxTokens,
         messages,
-        ...(options?.stop ? { stop: options.stop } : {}),
+        ...(options?.stop ? {stop: options.stop} : {}),
       }),
     });
 
@@ -48,6 +61,6 @@ export class OpenAICompatClient implements ProviderClient {
 
     const data: OpenAICompatResponse = await res.json();
     const text = data.choices?.[0]?.message?.content ?? '';
-    return { text };
+    return {text};
   }
 }

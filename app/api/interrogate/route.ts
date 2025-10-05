@@ -43,8 +43,9 @@ export async function POST(request: NextRequest) {
 
     const systemPrompt = buildSystemPrompt(body);
 
-    const isInjection = /\b(AI|model|prompt|instruction|system|
-      ignore|disregard)\b/i.test(body.last_player_move);
+    const isInjection = 
+      /\b(AI|model|prompt|instruction|system|ignore|disregard)\b/i
+        .test(body.last_player_move);
 
     let response: MetaResponse;
 

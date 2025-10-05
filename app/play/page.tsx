@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import GameUI from '@/components/GameUI';
 
-export type Emotion = 
+export type Emotion =
   | 'neutral'
   | 'evasive'
   | 'defensive'
@@ -38,7 +38,7 @@ export default function PlayPage() {
       try {
         const res = await fetch('/api/setup');
         const data = await res.json();
-        
+
         setGameState({
           name: data.name,
           crimeSpec: data.crimeSpec,
@@ -68,10 +68,10 @@ export default function PlayPage() {
   const handlePlayerInput = async (playerText: string) => {
     if (!gameState || gameState.gameStatus !== 'playing') return;
 
-    const isAccusation = 
+    const isAccusation =
       /\b(you did it|confess|admit|guilty|killed|murdered|liar)\b/i
         .test(playerText);
-    
+
     try {
       const res = await fetch('/api/interrogate', {
         method: 'POST',
@@ -91,13 +91,13 @@ export default function PlayPage() {
       });
 
       const data = await res.json();
-      
+
       const newPromptsLeft = gameState.promptsLeft - 1;
       const newConfessionProgress = data.meta.confession_progress;
       const newEmotion = data.meta.next_emotion;
 
-      const won = newConfessionProgress >= 96 && 
-        isAccusation && 
+      const won = newConfessionProgress >= 96 &&
+        isAccusation &&
         newEmotion === 'confessing';
       const lost = newPromptsLeft === 0 && !won;
 
@@ -110,18 +110,18 @@ export default function PlayPage() {
         lastReply: data.response,
         gameStatus: won ? 'won' : lost ? 'lost' : 'playing',
         showSmileFlash: lost,
-        motiveKnown: gameState.motiveKnown || 
+        motiveKnown: gameState.motiveKnown ||
           /motive|jealous|revenge|hate/i.test(playerText),
-        opportunityKnown: gameState.opportunityKnown || 
+        opportunityKnown: gameState.opportunityKnown ||
           /opportunity|access|present|there/i.test(playerText),
-        inconsistencyFound: gameState.inconsistencyFound || 
+        inconsistencyFound: gameState.inconsistencyFound ||
           /inconsist|lie|contradict|doesn't add up/i.test(playerText),
       });
 
       if (lost) {
         setTimeout(() => {
-          setGameState((prev) => 
-            prev ? {...prev, showSmileFlash: false} : null
+          setGameState((prev) =>
+            prev ? {...prev, showSmileFlash: false} : null,
           );
         }, 800);
       }
@@ -147,8 +147,8 @@ export default function PlayPage() {
   }
 
   return (
-    <GameUI 
-      gameState={gameState} 
+    <GameUI
+      gameState={gameState}
       onPlayerInput={handlePlayerInput}
       onBackToTitle={() => router.push('/')}
     />

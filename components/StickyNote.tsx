@@ -5,21 +5,21 @@ interface StickyNoteProps {
 }
 
 export default function StickyNote({
-  name, 
-  crimeSpec, 
+  name,
+  crimeSpec,
   alibiSpec,
 }: StickyNoteProps) {
   return (
-    <div className="fixed top-8 right-8 w-72 bg-yellow-100 
-      p-6 shadow-xl transform rotate-2 
+    <div className="fixed top-8 right-8 w-72 bg-yellow-100
+      p-6 shadow-xl transform rotate-2
       border-t-8 border-yellow-200">
-      <div className="font-handwriting text-gray-900 space-y-3 
+      <div className="font-handwriting text-gray-900 space-y-3
         text-sm leading-relaxed">
-        <div className="font-bold text-base border-b 
+        <div className="font-bold text-base border-b
           border-gray-400 pb-2">
           SUSPECT
         </div>
-        
+
         <div>
           <span className="font-semibold">Name:</span>
           <br />

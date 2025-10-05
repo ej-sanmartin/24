@@ -62,15 +62,15 @@ const corroborators = [
  * @returns JSON response with game initialization data
  */
 export async function GET() {
-  const firstName = 
+  const firstName =
     firstNames[Math.floor(Math.random() * firstNames.length)];
-  const lastName = 
+  const lastName =
     lastNames[Math.floor(Math.random() * lastNames.length)];
   const victim = victims[Math.floor(Math.random() * victims.length)];
   const place = places[Math.floor(Math.random() * places.length)];
   const weapon = weapons[Math.floor(Math.random() * weapons.length)];
   const alibi = alibis[Math.floor(Math.random() * alibis.length)];
-  const corroborator = 
+  const corroborator =
     corroborators[Math.floor(Math.random() * corroborators.length)];
 
   return NextResponse.json({

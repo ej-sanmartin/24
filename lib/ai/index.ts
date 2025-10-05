@@ -1,7 +1,7 @@
-import { ChatMessage, ChatOptions, ChatResult, ProviderClient } from './types';
-import { AI_PROVIDER, assertServerEnv } from './env';
-import { GroqClient } from './providers/groq';
-import { OpenAICompatClient } from './providers/openaiCompat';
+import {ChatMessage, ChatOptions, ChatResult, ProviderClient} from './types';
+import {AI_PROVIDER, assertServerEnv} from './env';
+import {GroqClient} from './providers/groq';
+import {OpenAICompatClient} from './providers/openaiCompat';
 
 let client: ProviderClient | null = null;
 
@@ -12,14 +12,14 @@ function getClient(): ProviderClient {
 
   assertServerEnv();
   switch (AI_PROVIDER) {
-    case 'groq':
-      client = new GroqClient();
-      break;
-    case 'openai_compat':
-      client = new OpenAICompatClient();
-      break;
-    default:
-      throw new Error(`Unsupported AI_PROVIDER: ${AI_PROVIDER}`);
+  case 'groq':
+    client = new GroqClient();
+    break;
+  case 'openai_compat':
+    client = new OpenAICompatClient();
+    break;
+  default:
+    throw new Error(`Unsupported AI_PROVIDER: ${AI_PROVIDER}`);
   }
   return client;
 }

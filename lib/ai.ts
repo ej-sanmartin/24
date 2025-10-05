@@ -8,21 +8,21 @@
  */
 export async function callMetaLlama(
   systemPrompt: string,
-  userMessage: string
+  userMessage: string,
 ): Promise<{
   response: string;
   meta: {next_emotion: string; confession_progress: number};
 }> {
   const apiKey = process.env.AI_API_KEY;
   const provider = process.env.AI_PROVIDER || 'meta';
-  
+
   // Default models per provider
   const defaultModels = {
     meta: 'llama-3.1-8b-instruct',
     groq: 'llama-3.1-8b-instant',
   };
-  
-  const model = process.env.AI_MODEL || 
+
+  const model = process.env.AI_MODEL ||
     defaultModels[provider as keyof typeof defaultModels];
 
   if (!apiKey) {
@@ -35,7 +35,7 @@ export async function callMetaLlama(
     groq: 'https://api.groq.com/openai/v1/chat/completions',
   };
 
-  const apiUrl = 
+  const apiUrl =
     endpoints[provider as keyof typeof endpoints] || endpoints.meta;
 
   const response = await fetch(apiUrl, {
@@ -59,7 +59,7 @@ export async function callMetaLlama(
     const errorText = await response.text();
     throw new Error(
       `${provider.toUpperCase()} API error: ` +
-      `${response.statusText} - ${errorText}`
+      `${response.statusText} - ${errorText}`,
     );
   }
 
