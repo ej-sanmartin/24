@@ -12,7 +12,7 @@ export default function StickyNote({
   return (
     <div className="fixed top-8 right-8 w-72 bg-yellow-100
       p-6 shadow-xl transform rotate-2
-      border-t-8 border-yellow-200
+      border-t-8 border-yellow-200 z-50
       md:top-8 md:right-8 md:w-72 md:rotate-2 md:border-t-8
       max-md:top-2 max-md:left-2 max-md:right-2 max-md:w-auto
       max-md:rotate-0 max-md:border-t-4 max-md:p-3">
