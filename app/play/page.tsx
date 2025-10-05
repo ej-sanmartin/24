@@ -123,7 +123,7 @@ export default function PlayPage() {
           setGameState((prev) =>
             prev ? {...prev, showSmileFlash: false} : null,
           );
-        }, 800);
+        }, 4000);
       }
     } catch (error) {
       console.error('Interrogation failed:', error);

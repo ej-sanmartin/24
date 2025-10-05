@@ -11,12 +11,24 @@ module.exports = {
         handwriting: ['var(--font-handwriting)', 'cursive'],
       },
       animation: {
-        'flash': 'flash 0.8s ease-in-out',
+        'flash': 'flash 4s ease-in-out forwards',
+        'fadeToBlack': 'fadeToBlack 1.5s ease-out forwards',
+        'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
       },
       keyframes: {
-        flash: {
-          '0%, 100%': { opacity: '0' },
-          '50%': { opacity: '1' },
+        'flash': {
+          '0%': {opacity: '0'},
+          '15%': {opacity: '1'},
+          '85%': {opacity: '1'},
+          '100%': {opacity: '0'},
+        },
+        'fadeToBlack': {
+          '0%': {opacity: '1'},
+          '100%': {opacity: '0'},
+        },
+        'pulse-slow': {
+          '0%, 100%': {opacity: '1'},
+          '50%': {opacity: '0.6'},
         },
       },
     },

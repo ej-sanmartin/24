@@ -1,10 +1,21 @@
 import {NextResponse} from 'next/server';
 
+// Force dynamic rendering - disable caching
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const firstNames = [
-  'Jordan', 'Alex', 'Taylor', 'Morgan', 'Chris', 'Jamie', 'Riley',
+  'Michael', 'James', 'Robert', 'David', 'William',
+  'Richard', 'Thomas', 'Charles', 'Daniel', 'Matthew',
+  'Anthony', 'Mark', 'Steven', 'Paul', 'Andrew',
+  'Joshua', 'Kenneth', 'Kevin', 'Brian', 'George',
+  'Edward', 'Ronald', 'Timothy', 'Jason', 'Jeffrey',
 ];
 const lastNames = [
-  'Smith', 'Johnson', 'Brown', 'Davis', 'Miller', 'Lopez', 'Anderson',
+  'Smith', 'Johnson', 'Williams', 'Brown', 'Jones',
+  'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez',
+  'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson',
+  'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin',
 ];
 
 const victims = [
@@ -62,6 +73,11 @@ const corroborators = [
  * @returns JSON response with game initialization data
  */
 export async function GET() {
+  // Disable caching to ensure fresh scenarios every time
+  const headers = {
+    'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+    'Pragma': 'no-cache',
+  };
   const firstName =
     firstNames[Math.floor(Math.random() * firstNames.length)];
   const lastName =
@@ -73,14 +89,17 @@ export async function GET() {
   const corroborator =
     corroborators[Math.floor(Math.random() * corroborators.length)];
 
-  return NextResponse.json({
-    name: {
-      first: firstName,
-      last: lastName,
+  return NextResponse.json(
+    {
+      name: {
+        first: firstName,
+        last: lastName,
+      },
+      crimeSpec: `The victim was a ${victim} killed at ${place} ` +
+        `with ${weapon}.`,
+      alibiSpec: `At that time, ${firstName} ${lastName} claims ` +
+        `they were at ${alibi}, corroborated by ${corroborator}.`,
     },
-    crimeSpec: `The victim was a ${victim} killed at ${place} ` +
-      `with ${weapon}.`,
-    alibiSpec: `At that time, ${firstName} ${lastName} claims ` +
-      `they were at ${alibi}, corroborated by ${corroborator}.`,
-  });
+    {headers},
+  );
 }

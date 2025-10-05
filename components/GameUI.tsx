@@ -37,6 +37,8 @@ export default function GameUI({
         <Image
           src="/portraits/smiling.png"
           alt="Smiling"
+          width={500}
+          height={500}
           className="w-[500px] h-auto animate-flash"
         />
       </div>
@@ -47,7 +49,8 @@ export default function GameUI({
     return (
       <div className="min-h-screen flex flex-col items-center
         justify-center space-y-8">
-        <div className="text-6xl font-bold text-red-500">
+        <div className="text-6xl font-bold text-red-500
+          animate-pulse-slow">
           he got away.
         </div>
         <button
@@ -65,7 +68,7 @@ export default function GameUI({
     return (
       <div className="min-h-screen flex flex-col items-center
         justify-center space-y-8">
-        <div className="text-4xl font-light text-white">
+        <div className="text-4xl font-light text-white animate-pulse-slow">
           a game by{' '}
           <a
             href="https://tini.la/edgar"
@@ -101,7 +104,7 @@ export default function GameUI({
 
         <div className="bg-gray-900/80 rounded-lg p-6
           min-h-[120px] max-w-2xl w-full
-          border border-gray-700 shadow-xl">
+          border border-gray-500 shadow-xl">
           <p className="text-lg leading-relaxed text-gray-100">
             {gameState.lastReply}
           </p>
@@ -116,8 +119,8 @@ export default function GameUI({
               disabled={isSubmitting}
               placeholder="Type your next line..."
               className="w-full px-6 py-4 text-lg bg-gray-800
-                text-white border-2 border-gray-600
-                focus:border-white focus:outline-none
+                text-white border-2 border-gray-500
+                focus:border-gray-300 focus:outline-none
                 transition-colors disabled:opacity-50"
             />
           </form>

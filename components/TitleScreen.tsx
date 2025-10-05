@@ -11,7 +11,7 @@ export default function TitleScreen() {
       justify-center relative">
       <div className="text-center space-y-12">
         <h1 className="text-[12rem] font-bold tracking-wider
-          text-shadow-glow">
+          text-shadow-glow animate-pulse-slow">
           24
         </h1>
 
