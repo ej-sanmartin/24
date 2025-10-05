@@ -38,6 +38,14 @@ export default function TitleScreen() {
         max-md:bottom-4 max-md:right-4 max-md:text-xs">
         <div>
           <Link
+            href="/about"
+            className="hover:text-white/60 transition-colors"
+          >
+            About
+          </Link>
+        </div>
+        <div>
+          <Link
             href="https://unveilengine.com"
             target="_blank"
             className="hover:text-white/60 transition-colors"
@@ -52,6 +60,15 @@ export default function TitleScreen() {
             className="hover:text-white/60 transition-colors"
           >
             Twitter
+          </Link>
+        </div>
+        <div>
+          <Link
+            href="https://ko-fi.com/esanmartin"
+            target="_blank"
+            className="hover:text-white/60 transition-colors"
+          >
+            Donate
           </Link>
         </div>
       </div>
