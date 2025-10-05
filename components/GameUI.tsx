@@ -116,7 +116,7 @@ export default function GameUI({
       <div className="flex-1 flex flex-col items-center
         justify-center space-y-12 max-w-4xl mx-auto w-full
         md:space-y-12
-        max-md:space-y-4 max-md:justify-start max-md:pt-2">
+        max-md:space-y-6 max-md:justify-center">
         <Portrait emotion={gameState.currentEmotion} />
 
         <div className="bg-gray-950/95 rounded-lg p-4
