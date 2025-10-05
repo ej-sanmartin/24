@@ -1,76 +1,40 @@
-import {NextRequest, NextResponse} from 'next/server';
-import {callMetaLlama} from '@/lib/ai';
-import {buildSystemPrompt} from '@/lib/prompt';
+import { NextRequest, NextResponse } from 'next/server';
+import { chat } from '@/lib/ai';
+import { ChatMessage } from '@/lib/ai/types';
 
-interface InterrogateRequest {
-  name: {first: string; last: string};
-  crimeSpec: string;
-  alibiSpec: string;
-  motiveKnown: boolean;
-  opportunityKnown: boolean;
-  inconsistencyFound: boolean;
-  confession_progress: number;
-  current_emotion: string;
-  last_player_move: string;
-  accusation_gate: boolean;
-}
+export const runtime = 'nodejs'; // ensure server runtime
 
-interface MetaResponse {
-  response: string;
-  meta: {
-    next_emotion: string;
-    confession_progress: number;
-  };
-}
+export async function POST(req: NextRequest): Promise<NextResponse> {
+  const body = await req.json();
 
-/**
- * Handles interrogation API calls to Meta Llama.
- * Processes player input and returns suspect response with metadata.
- * @param request - Next.js request object
- * @returns JSON response with suspect reply and game state updates
- */
-export async function POST(request: NextRequest) {
-  try {
-    const body: InterrogateRequest = await request.json();
-
-    const systemPrompt = buildSystemPrompt(body);
-
-    const isInjection = /\b(AI|model|prompt|instruction|system|
-      ignore|disregard)\b/i.test(body.last_player_move);
-
-    let response: MetaResponse;
-
-    if (isInjection) {
-      response = {
-        response: 'What are you talking about? Stick to the questions.',
-        meta: {
-          next_emotion: 'evasive',
-          confession_progress: Math.max(
-            0, 
-            body.confession_progress - 5
-          ),
-        },
-      };
-    } else {
-      response = await callMetaLlama(
-        systemPrompt, 
-        body.last_player_move
-      );
-    }
-
-    return NextResponse.json(response);
-  } catch (error) {
-    console.error('Interrogate API error:', error);
+  if (typeof body !== 'object' || body === null) {
     return NextResponse.json(
-      {
-        error: 'Failed to process interrogation',
-        response: '...',
-        meta: {
-          next_emotion: 'neutral',
-          confession_progress: 0,
-        },
-      },
-      {status: 500}
+      { error: 'Request body must be a JSON object.' },
+      { status: 400 },
     );
   }
+
+  const systemPrompt = typeof body.systemPrompt === 'string' ? body.systemPrompt : '';
+  const userPrompt = typeof body.userPrompt === 'string' ? body.userPrompt : '';
+
+  if (!userPrompt) {
+    return NextResponse.json(
+      { error: 'userPrompt is required.' },
+      { status: 400 },
+    );
+  }
+
+  const messages: readonly ChatMessage[] = [
+    { role: 'system', content: systemPrompt },
+    { role: 'user', content: userPrompt },
+  ];
+
+  const result = await chat(messages, {
+    // optional overrides; otherwise defaults from env
+    // model: 'llama-3.3-70b-versatile',
+    // temperature: 0.65,
+    // maxTokens: 128,
+  });
+
+  return NextResponse.json({ text: result.text });
 }
