@@ -106,7 +106,7 @@ export default function GameUI({
     <div className="h-screen flex flex-col py-4 px-4 relative
       overflow-hidden
       md:py-4 md:px-4
-      max-md:py-0 max-md:px-2 max-md:pt-28">
+      max-md:py-0 max-md:px-2 max-md:pt-12">
       <StickyNote
         name={gameState.name}
         crimeSpec={gameState.crimeSpec}
