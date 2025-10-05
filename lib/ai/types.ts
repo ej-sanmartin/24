@@ -17,5 +17,8 @@ export interface ChatResult {
 }
 
 export interface ProviderClient {
-  chat(messages: readonly ChatMessage[], options?: ChatOptions): Promise<ChatResult>;
+  chat(
+    messages: readonly ChatMessage[],
+    options?: ChatOptions,
+  ): Promise<ChatResult>;
 }

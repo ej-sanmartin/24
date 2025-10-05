@@ -83,10 +83,10 @@ export default function PlayPage() {
           motiveKnown: gameState.motiveKnown,
           opportunityKnown: gameState.opportunityKnown,
           inconsistencyFound: gameState.inconsistencyFound,
-          confession_progress: gameState.confessionProgress,
-          current_emotion: gameState.currentEmotion,
-          last_player_move: playerText,
-          accusation_gate: isAccusation,
+          confessionProgress: gameState.confessionProgress,
+          currentEmotion: gameState.currentEmotion,
+          lastPlayerMove: playerText,
+          accusationGate: isAccusation,
         }),
       });
 

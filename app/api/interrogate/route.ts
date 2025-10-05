@@ -17,10 +17,10 @@ interface InterrogateRequest {
   motiveKnown: boolean;
   opportunityKnown: boolean;
   inconsistencyFound: boolean;
-  confession_progress: number;
-  current_emotion: string;
-  last_player_move: string;
-  accusation_gate: boolean;
+  confessionProgress: number;
+  currentEmotion: string;
+  lastPlayerMove: string;
+  accusationGate: boolean;
 }
 
 interface MetaResponse {
@@ -43,9 +43,9 @@ export async function POST(request: NextRequest) {
 
     const systemPrompt = buildSystemPrompt(body);
 
-    const isInjection = 
+    const isInjection =
       /\b(AI|model|prompt|instruction|system|ignore|disregard)\b/i
-        .test(body.last_player_move);
+        .test(body.lastPlayerMove);
 
     let response: MetaResponse;
 
@@ -55,15 +55,15 @@ export async function POST(request: NextRequest) {
         meta: {
           next_emotion: 'evasive',
           confession_progress: Math.max(
-            0, 
-            body.confession_progress - 5
+            0,
+            body.confessionProgress - 5,
           ),
         },
       };
     } else {
       response = await callMetaLlama(
-        systemPrompt, 
-        body.last_player_move
+        systemPrompt,
+        body.lastPlayerMove,
       );
     }
 
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
           confession_progress: 0,
         },
       },
-      {status: 500}
+      {status: 500},
     );
   }
 }
