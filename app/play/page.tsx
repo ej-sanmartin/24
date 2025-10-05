@@ -132,7 +132,7 @@ export default function PlayPage() {
 
   if (loading) {
     return (
-      <div className="h-screen flex items-center justify-center 
+      <div className="h-screen flex items-center justify-center
         overflow-hidden">
         <div className="text-2xl text-white/60">Loading...</div>
       </div>

@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: '24 - An AI Interrogation Experience',
-  description: 
+  description:
     'You have 24 prompts to break a murder suspect. ' +
     'An intense AI-powered detective interrogation game. ' +
     'Can you extract a confession before time runs out?',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://24.jupiterwave.games',
     title: '24 - An AI Interrogation Experience',
-    description: 
+    description:
       'You have 24 prompts to break a murder suspect. ' +
       'An intense AI-powered detective interrogation game.',
     siteName: '24',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: '24 - An AI Interrogation Experience',
-    description: 
+    description:
       'You have 24 prompts to break a murder suspect. ' +
       'Can you extract a confession?',
     images: ['/og-image.png'],
@@ -53,8 +53,8 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
     googleBot: {
-      index: true,
-      follow: true,
+      'index': true,
+      'follow': true,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
