@@ -1,6 +1,6 @@
 /**
- * Calls Meta Llama API with system and user prompts.
- * Parses response and extracts JSON metadata footer.
+ * Calls the configured AI provider (Meta Llama or Groq) with system
+ * and user prompts. Parses response and extracts JSON metadata footer.
  * @param systemPrompt - Full system prompt with game state
  * @param userMessage - Player's interrogation line
  * @returns Parsed response with suspect reply and metadata
@@ -13,34 +13,40 @@ export async function callMetaLlama(
   meta: {next_emotion: string; confession_progress: number};
 }> {
   const apiKey = process.env.AI_API_KEY;
-  const model = process.env.AI_MODEL || 'llama-3.1-8b-instruct';
+  const provider = process.env.AI_PROVIDER || 'meta';
+  const model = process.env.AI_MODEL || 
+    (provider === 'groq' ? 'mixtral-8x7b-32768' : 'llama-3.1-8b-instruct');
 
   if (!apiKey) {
     throw new Error('AI_API_KEY not configured');
   }
 
-  const response = await fetch(
-    'https://api.llama.com/v1/chat/completions',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: model,
-        messages: [
-          {role: 'system', content: systemPrompt},
-          {role: 'user', content: userMessage},
-        ],
-        temperature: 0.65,
-        max_tokens: 128,
-      }),
-    }
-  );
+  const apiUrl = provider === 'groq' 
+    ? 'https://api.groq.com/openai/v1/chat/completions'
+    : 'https://api.llama.com/v1/chat/completions';
+
+  const response = await fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: model,
+      messages: [
+        {role: 'system', content: systemPrompt},
+        {role: 'user', content: userMessage},
+      ],
+      temperature: 0.65,
+      max_tokens: 128,
+    }),
+  });
 
   if (!response.ok) {
-    throw new Error(`Meta API error: ${response.statusText}`);
+    const errorText = await response.text();
+    throw new Error(
+      `${provider} API error: ${response.statusText} - ${errorText}`
+    );
   }
 
   const data = await response.json();

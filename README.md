@@ -19,7 +19,9 @@ manipulative, and won't break easily. You must:
 ### Prerequisites
 
 - Node.js 18+ 
-- Meta Llama API key (from https://api.llama.com)
+- AI API key from either:
+  - **Meta Llama** (recommended): https://api.llama.com
+  - **Groq** (alternative): https://console.groq.com
 
 ### Installation
 
@@ -30,8 +32,10 @@ npm install
 # Create environment file
 cp .env.local.example .env.local
 
-# Add your Meta Llama API key to .env.local
-# AI_API_KEY=your_actual_key_here
+# Edit .env.local and configure your chosen AI provider:
+# - For Meta Llama: AI_PROVIDER=meta, AI_MODEL=llama-3.1-8b-instruct
+# - For Groq: AI_PROVIDER=groq, AI_MODEL=mixtral-8x7b-32768
+# Then add your API key
 
 # Run development server
 npm run dev
@@ -77,11 +81,25 @@ Place portrait images in `public/portraits/`:
 
 ### Environment Variables
 
+**Option 1: Meta Llama (Recommended)**
 ```env
 AI_PROVIDER=meta
 AI_MODEL=llama-3.1-8b-instruct
-AI_API_KEY=your_key_here
+AI_API_KEY=your_meta_llama_key
 ```
+
+**Option 2: Groq (Alternative)**
+```env
+AI_PROVIDER=groq
+AI_MODEL=mixtral-8x7b-32768
+AI_API_KEY=your_groq_key
+```
+
+**Security Notes:**
+- ✅ All API calls are server-side only (Next.js API routes)
+- ✅ API keys never exposed to client/browser
+- ✅ Environment variables loaded securely via Next.js
+- ✅ No API keys in client-side JavaScript bundles
 
 ### Deployment to Vercel
 

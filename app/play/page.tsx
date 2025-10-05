@@ -68,8 +68,9 @@ export default function PlayPage() {
   const handlePlayerInput = async (playerText: string) => {
     if (!gameState || gameState.gameStatus !== 'playing') return;
 
-    const isAccusation = /\b(you did it|confess|admit|guilty|killed|
-      murdered|liar)\b/i.test(playerText);
+    const isAccusation = 
+      /\b(you did it|confess|admit|guilty|killed|murdered|liar)\b/i
+        .test(playerText);
     
     try {
       const res = await fetch('/api/interrogate', {
