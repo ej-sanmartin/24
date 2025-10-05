@@ -100,10 +100,10 @@ export default function GameUI({
       />
 
       <div className="flex-1 flex flex-col items-center
-        justify-center space-y-4 max-w-4xl mx-auto w-full">
+        justify-center space-y-6 max-w-4xl mx-auto w-full">
         <Portrait emotion={gameState.currentEmotion} />
 
-        <div className="bg-gray-900/80 rounded-lg p-4
+        <div className="bg-gray-950/95 rounded-lg p-4
           min-h-[100px] max-w-2xl w-full
           border border-gray-500 shadow-xl">
           <p className="text-base leading-relaxed text-gray-100">
@@ -119,7 +119,7 @@ export default function GameUI({
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isSubmitting}
               placeholder="Type your next line..."
-              className="w-full px-4 py-3 text-base bg-gray-800
+              className="w-full px-4 py-3 text-base bg-gray-950
                 text-white border-2 border-gray-500
                 focus:border-gray-300 focus:outline-none
                 transition-colors disabled:opacity-50"
