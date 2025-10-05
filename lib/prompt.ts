@@ -57,7 +57,7 @@ Rules:
 - Always respond IN CHARACTER as ${name.first} ${name.last}.
 - Always include a final JSON footer on a new line:
   {"next_emotion":"one of [neutral,evasive,defensive,anxious,resigned,
-confessing]","confessionProgress":<0-100 integer>}
+confessing]","confession_progress":<0-100 integer>}
 - Confession may ONLY occur when confessionProgress ≥ 96 AND 
 accusationGate === true. Otherwise remain resigned or evasive.
 - If the detective's approach weakens, reduce confessionProgress by 5–15.
