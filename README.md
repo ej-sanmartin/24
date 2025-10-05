@@ -19,9 +19,9 @@ manipulative, and won't break easily. You must:
 ### Prerequisites
 
 - Node.js 18+ 
-- AI API key from either:
-  - **Meta Llama** (recommended): https://api.llama.com
-  - **Groq** (alternative): https://console.groq.com
+- AI API key from one of:
+  - **Meta Llama**: https://api.llama.com (official Llama API)
+  - **Groq**: https://console.groq.com (fast inference)
 
 ### Installation
 
@@ -32,10 +32,9 @@ npm install
 # Create environment file
 cp .env.local.example .env.local
 
-# Edit .env.local and configure your chosen AI provider:
-# - For Meta Llama: AI_PROVIDER=meta, AI_MODEL=llama-3.1-8b-instruct
-# - For Groq: AI_PROVIDER=groq, AI_MODEL=mixtral-8x7b-32768
-# Then add your API key
+# Edit .env.local and configure your AI provider:
+# AI_PROVIDER=meta (or groq)
+# AI_API_KEY=your_actual_key_here
 
 # Run development server
 npm run dev
@@ -81,25 +80,41 @@ Place portrait images in `public/portraits/`:
 
 ### Environment Variables
 
-**Option 1: Meta Llama (Recommended)**
+**Required:**
+- `AI_API_KEY` - Your API key (Meta Llama or Groq)
+
+**Optional:**
+- `AI_PROVIDER` - Either `meta` or `groq` (default: `meta`)
+- `AI_MODEL` - Model to use (defaults to provider-specific model)
+
+**Meta Llama Example:**
 ```env
 AI_PROVIDER=meta
 AI_MODEL=llama-3.1-8b-instruct
-AI_API_KEY=your_meta_llama_key
+AI_API_KEY=your_meta_key_here
 ```
 
-**Option 2: Groq (Alternative)**
+**Groq Example (faster inference):**
 ```env
 AI_PROVIDER=groq
-AI_MODEL=mixtral-8x7b-32768
-AI_API_KEY=your_groq_key
+AI_MODEL=llama-3.1-8b-instant
+AI_API_KEY=your_groq_key_here
 ```
 
-**Security Notes:**
-- ✅ All API calls are server-side only (Next.js API routes)
-- ✅ API keys never exposed to client/browser
-- ✅ Environment variables loaded securely via Next.js
-- ✅ No API keys in client-side JavaScript bundles
+### Security Architecture
+
+✅ **All AI calls are SERVER-SIDE ONLY**
+- API keys never exposed to client
+- Calls made through Next.js API routes (`/api/interrogate`)
+- Client only sends game state, never has API access
+
+✅ **No client-side API key exposure**
+- Environment variables only accessible in server components
+- API routes run on Vercel's serverless functions
+
+✅ **Input validation**
+- Prompt injection detection and deflection
+- Rate limiting through Vercel's built-in protection
 
 ### Deployment to Vercel
 

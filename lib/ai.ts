@@ -1,6 +1,7 @@
 /**
  * Calls the configured AI provider (Meta Llama or Groq) with system
  * and user prompts. Parses response and extracts JSON metadata footer.
+ * This function runs SERVER-SIDE ONLY via API routes for security.
  * @param systemPrompt - Full system prompt with game state
  * @param userMessage - Player's interrogation line
  * @returns Parsed response with suspect reply and metadata
@@ -14,16 +15,28 @@ export async function callMetaLlama(
 }> {
   const apiKey = process.env.AI_API_KEY;
   const provider = process.env.AI_PROVIDER || 'meta';
+  
+  // Default models per provider
+  const defaultModels = {
+    meta: 'llama-3.1-8b-instruct',
+    groq: 'llama-3.1-8b-instant',
+  };
+  
   const model = process.env.AI_MODEL || 
-    (provider === 'groq' ? 'mixtral-8x7b-32768' : 'llama-3.1-8b-instruct');
+    defaultModels[provider as keyof typeof defaultModels];
 
   if (!apiKey) {
     throw new Error('AI_API_KEY not configured');
   }
 
-  const apiUrl = provider === 'groq' 
-    ? 'https://api.groq.com/openai/v1/chat/completions'
-    : 'https://api.llama.com/v1/chat/completions';
+  // Provider-specific endpoints
+  const endpoints = {
+    meta: 'https://api.llama.com/v1/chat/completions',
+    groq: 'https://api.groq.com/openai/v1/chat/completions',
+  };
+
+  const apiUrl = 
+    endpoints[provider as keyof typeof endpoints] || endpoints.meta;
 
   const response = await fetch(apiUrl, {
     method: 'POST',
@@ -45,7 +58,8 @@ export async function callMetaLlama(
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(
-      `${provider} API error: ${response.statusText} - ${errorText}`
+      `${provider.toUpperCase()} API error: ` +
+      `${response.statusText} - ${errorText}`
     );
   }
 
