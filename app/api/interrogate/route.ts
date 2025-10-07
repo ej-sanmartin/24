@@ -38,8 +38,10 @@ interface MetaResponse {
  * @returns JSON response with suspect reply and game state updates
  */
 export async function POST(request: NextRequest) {
+  let confessionProgress = 0;
   try {
     const body: InterrogateRequest = await request.json();
+    confessionProgress = body.confessionProgress;
 
     const systemPrompt = buildSystemPrompt(body);
 
@@ -76,7 +78,7 @@ export async function POST(request: NextRequest) {
         response: '...',
         meta: {
           next_emotion: 'neutral',
-          confession_progress: 0,
+          confession_progress: confessionProgress,
         },
       },
       {status: 500},
