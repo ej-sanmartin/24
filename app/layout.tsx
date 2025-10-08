@@ -1,4 +1,5 @@
 import type {Metadata} from 'next';
+import {FathomAnalytics} from './fathom';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -78,7 +79,10 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
         />
       </head>
-      <body className="h-screen overflow-hidden">{children}</body>
+      <body className="h-screen overflow-hidden">
+        <FathomAnalytics />
+        {children}
+      </body>
     </html>
   );
 }
