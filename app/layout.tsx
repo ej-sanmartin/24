@@ -79,7 +79,7 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
         />
       </head>
-      <body className="h-screen overflow-hidden">
+      <body className="min-h-screen overflow-x-hidden">
         <FathomAnalytics />
         {children}
       </body>
