@@ -18,7 +18,60 @@ const lastNames = [
   'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin',
 ];
 
-const victims = [
+const victimNames = [
+  'Olivia Johnson',
+  'Noah Smith',
+  'Emma Williams',
+  'Liam Brown',
+  'Ava Jones',
+  'Ethan Garcia',
+  'Sophia Miller',
+  'Mason Davis',
+  'Isabella Rodriguez',
+  'Logan Martinez',
+  'Mia Hernandez',
+  'Lucas Lopez',
+  'Charlotte Gonzalez',
+  'Elijah Wilson',
+  'Amelia Anderson',
+  'Benjamin Thomas',
+  'Harper Taylor',
+  'Oliver Moore',
+  'Evelyn Jackson',
+  'James Martin',
+  'Abigail Thompson',
+  'Alexander White',
+  'Emily Lee',
+  'Michael Harris',
+  'Elizabeth Clark',
+  'Daniel Lewis',
+  'Sofia Robinson',
+  'Henry Walker',
+  'Avery Perez',
+  'Jackson Hall',
+  'Ella Young',
+  'Sebastian Allen',
+  'Scarlett Sanchez',
+  'Jack Wright',
+  'Grace King',
+  'Owen Scott',
+  'Chloe Green',
+  'Wyatt Baker',
+  'Lily Adams',
+  'Gabriel Nelson',
+  'Hannah Carter',
+  'David Mitchell',
+  'Aria Flores',
+  'Matthew Turner',
+  'Nora Phillips',
+  'Caleb Campbell',
+  'Victoria Parker',
+  'Julian Evans',
+  'Zoe Rivera',
+  'Levi Cooper',
+];
+
+const victimDescriptors = [
   'business partner',
   'tech CEO',
   'wealthy investor',
@@ -197,7 +250,10 @@ export async function GET() {
     firstNames[Math.floor(Math.random() * firstNames.length)];
   const lastName =
     lastNames[Math.floor(Math.random() * lastNames.length)];
-  const victim = victims[Math.floor(Math.random() * victims.length)];
+  const victimName =
+    victimNames[Math.floor(Math.random() * victimNames.length)];
+  const victimDescriptor =
+    victimDescriptors[Math.floor(Math.random() * victimDescriptors.length)];
   const place = places[Math.floor(Math.random() * places.length)];
   const weapon = weapons[Math.floor(Math.random() * weapons.length)];
   const alibi = alibis[Math.floor(Math.random() * alibis.length)];
@@ -210,7 +266,11 @@ export async function GET() {
         first: firstName,
         last: lastName,
       },
-      crimeSpec: `The victim was a ${victim} killed at ${place} ` +
+      victim: {
+        name: victimName,
+        descriptor: victimDescriptor,
+      },
+      crimeSpec: `The victim, ${victimName}, was a ${victimDescriptor} killed at ${place} ` +
         `with ${weapon}.`,
       alibiSpec: `At that time, ${firstName} ${lastName} claims ` +
         `they were at ${alibi}, corroborated by ${corroborator}.`,

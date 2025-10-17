@@ -4,12 +4,14 @@ import {useState} from 'react';
 
 interface StickyNoteProps {
   name: {first: string; last: string};
+  victim: {name: string; descriptor: string};
   crimeSpec: string;
   alibiSpec: string;
 }
 
 export default function StickyNote({
   name,
+  victim,
   crimeSpec,
   alibiSpec,
 }: StickyNoteProps) {
@@ -48,6 +50,14 @@ export default function StickyNote({
               <br className="md:block max-md:hidden" />
               <span className="max-md:ml-1">
                 {name.first} {name.last}
+              </span>
+            </div>
+
+            <div>
+              <span className="font-semibold">Victim:</span>
+              <br className="md:block max-md:hidden" />
+              <span className="max-md:ml-1 max-md:block">
+                {victim.name} ({victim.descriptor})
               </span>
             </div>
 

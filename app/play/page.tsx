@@ -31,6 +31,7 @@ export type ConversationEntry = {
 
 export interface GameState {
   name: {first: string; last: string};
+  victim: {name: string; descriptor: string};
   crimeSpec: string;
   alibiSpec: string;
   promptsLeft: number;
@@ -61,6 +62,7 @@ export default function PlayPage() {
 
         setGameState({
           name: data.name,
+          victim: data.victim,
           crimeSpec: data.crimeSpec,
           alibiSpec: data.alibiSpec,
           promptsLeft: 24,
@@ -106,6 +108,7 @@ export default function PlayPage() {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           name: gameState.name,
+          victim: gameState.victim,
           crimeSpec: gameState.crimeSpec,
           alibiSpec: gameState.alibiSpec,
           motiveKnown: gameState.motiveKnown,

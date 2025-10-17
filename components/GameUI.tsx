@@ -109,6 +109,7 @@ export default function GameUI({
       max-md:py-0 max-md:px-2 max-md:pt-12">
       <StickyNote
         name={gameState.name}
+        victim={gameState.victim}
         crimeSpec={gameState.crimeSpec}
         alibiSpec={gameState.alibiSpec}
       />

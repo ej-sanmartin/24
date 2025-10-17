@@ -1,5 +1,6 @@
 interface PromptData {
   name: {first: string; last: string};
+  victim: {name: string; descriptor: string};
   crimeSpec: string;
   alibiSpec: string;
   motiveKnown: boolean;
@@ -22,6 +23,7 @@ interface PromptData {
 export function buildSystemPrompt(data: PromptData): string {
   const {
     name,
+    victim,
     crimeSpec,
     alibiSpec,
     motiveKnown,
@@ -60,6 +62,9 @@ the detective:
 2. Establishes opportunity,
 3. Catches at least one key inconsistency in your alibi,
 AND the detective makes an explicit accusation or aggressive comment.
+
+Victim:
+${victim.name} (${victim.descriptor})
 
 Crime details:
 ${crimeSpec}
