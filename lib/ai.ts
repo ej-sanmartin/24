@@ -69,6 +69,9 @@ export async function callMetaLlama(
   return parseResponse(fullText);
 }
 
+export {chat} from './ai/index';
+export type {ChatMessage} from './ai/types';
+
 /**
  * Parses AI response text and extracts JSON metadata footer.
  * @param text - Raw response from AI model

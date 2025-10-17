@@ -12,6 +12,23 @@ export type Emotion =
   | 'resigned'
   | 'confessing';
 
+interface InterrogateResponse {
+  response: string;
+  meta: {
+    next_emotion: Emotion;
+    confession_progress: number;
+  };
+  memory?: {
+    summary: string;
+    ledger: string[];
+  };
+}
+
+export type ConversationEntry = {
+  role: 'player' | 'suspect';
+  content: string;
+};
+
 export interface GameState {
   name: {first: string; last: string};
   crimeSpec: string;
@@ -26,6 +43,9 @@ export interface GameState {
   lastReply: string;
   gameStatus: 'playing' | 'won' | 'lost';
   showSmileFlash: boolean;
+  conversationHistory: ConversationEntry[];
+  memorySummary: string;
+  memoryLedger: string[];
 }
 
 export default function PlayPage() {
@@ -54,6 +74,9 @@ export default function PlayPage() {
             `I've told you everything.`,
           gameStatus: 'playing',
           showSmileFlash: false,
+          conversationHistory: [],
+          memorySummary: '',
+          memoryLedger: [],
         });
       } catch (error) {
         console.error('Failed to initialize game:', error);
@@ -72,6 +95,11 @@ export default function PlayPage() {
       /\b(you did it|confess|admit|guilty|killed|murdered|liar)\b/i
         .test(playerText);
 
+    const updatedHistory: ConversationEntry[] = [
+      ...gameState.conversationHistory,
+      {role: 'player', content: playerText},
+    ];
+
     try {
       const res = await fetch('/api/interrogate', {
         method: 'POST',
@@ -87,10 +115,15 @@ export default function PlayPage() {
           currentEmotion: gameState.currentEmotion,
           lastPlayerMove: playerText,
           accusationGate: isAccusation,
+          conversationHistory: updatedHistory,
+          memory: {
+            summary: gameState.memorySummary,
+            ledger: gameState.memoryLedger,
+          },
         }),
       });
 
-      const data = await res.json();
+      const data: InterrogateResponse = await res.json();
 
       const newPromptsLeft = gameState.promptsLeft - 1;
       const newConfessionProgress = data.meta.confession_progress;
@@ -100,6 +133,11 @@ export default function PlayPage() {
         isAccusation &&
         newEmotion === 'confessing';
       const lost = newPromptsLeft === 0 && !won;
+
+      const suspectEntry: ConversationEntry = {
+        role: 'suspect',
+        content: data.response,
+      };
 
       setGameState({
         ...gameState,
@@ -116,6 +154,9 @@ export default function PlayPage() {
           /opportunity|access|present|there/i.test(playerText),
         inconsistencyFound: gameState.inconsistencyFound ||
           /inconsist|lie|contradict|doesn't add up/i.test(playerText),
+        conversationHistory: [...updatedHistory, suspectEntry],
+        memorySummary: data.memory?.summary ?? gameState.memorySummary,
+        memoryLedger: data.memory?.ledger ?? gameState.memoryLedger,
       });
 
       if (lost) {

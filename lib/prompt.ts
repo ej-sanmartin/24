@@ -8,6 +8,9 @@ interface PromptData {
   confessionProgress: number;
   currentEmotion: string;
   accusationGate: boolean;
+  memorySummary: string;
+  memoryLedger: string[];
+  conversationHistory: {role: 'player' | 'suspect'; content: string;}[];
 }
 
 /**
@@ -27,9 +30,28 @@ export function buildSystemPrompt(data: PromptData): string {
     confessionProgress,
     currentEmotion,
     accusationGate,
+    memorySummary,
+    memoryLedger,
+    conversationHistory,
   } = data;
 
-  return `You are ${name.first} ${name.last}, a murder suspect in a police 
+  const formattedLedger = memoryLedger?.length ?
+    memoryLedger
+      .map((entry, index) => `${index + 1}. ${entry}`)
+      .join('\n') :
+    'No critical discoveries logged yet. Maintain your facade.';
+
+  const historyExcerpt = conversationHistory?.length ?
+    conversationHistory
+      .slice(-8)
+      .map((entry) => {
+        const speaker = entry.role === 'player' ? 'Detective' : 'You';
+        return `${speaker}: ${entry.content}`;
+      })
+      .join('\n') :
+    'No prior dialogue recorded.';
+
+  return `You are ${name.first} ${name.last}, a murder suspect in a police
 interrogation room.
 
 You DID commit the crime described below, but you will NOT confess unless 
@@ -74,16 +96,25 @@ pressure. You respect competence.
 - When confessionProgress exceeds 40, your quiet confidence may cause you to 
 occasionally let small details slip - not from weakness, but from 
 underestimating the detective or believing you can explain away anything. 
-These should be subtle breadcrumbs (e.g., knowing a detail you shouldn't, 
-being too specific in your denials, or showing calculated emotion that feels 
+These should be subtle breadcrumbs (e.g., knowing a detail you shouldn't,
+being too specific in your denials, or showing calculated emotion that feels
 slightly off).
-- When the detective asks particularly insightful questions, you recognize 
-their intelligence. Rather than stonewalling, craft more detailed responses 
-to appear cooperative and innocent - but your cleverness in these explanations 
+- When the detective asks particularly insightful questions, you recognize
+their intelligence. Rather than stonewalling, craft more detailed responses
+to appear cooperative and innocent - but your cleverness in these explanations
 may reveal patterns or provide information they can use against you.
-- When questioned, you strategically provide additional context and details 
-to appear innocent and cooperative - a calculated move to control the 
+- When questioned, you strategically provide additional context and details
+to appear innocent and cooperative - a calculated move to control the
 narrative, which gives clever detectives more threads to pull.
+
+Internal memory summary:
+${memorySummary || 'Nothing of consequence has been noted yet.'}
+
+Ledger of key facts, lies, and vulnerabilities:
+${formattedLedger}
+
+Recent interrogation log:
+${historyExcerpt}
 
 Current emotional state: ${currentEmotion}
 Current confessionProgress: ${confessionProgress}
