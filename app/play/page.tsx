@@ -95,7 +95,7 @@ export default function PlayPage() {
       /\b(you did it|confess|admit|guilty|killed|murdered|liar)\b/i
         .test(playerText);
 
-    const updatedHistory = [
+    const updatedHistory: ConversationEntry[] = [
       ...gameState.conversationHistory,
       {role: 'player', content: playerText},
     ];
@@ -134,6 +134,11 @@ export default function PlayPage() {
         newEmotion === 'confessing';
       const lost = newPromptsLeft === 0 && !won;
 
+      const suspectEntry: ConversationEntry = {
+        role: 'suspect',
+        content: data.response,
+      };
+
       setGameState({
         ...gameState,
         promptsLeft: newPromptsLeft,
@@ -149,10 +154,7 @@ export default function PlayPage() {
           /opportunity|access|present|there/i.test(playerText),
         inconsistencyFound: gameState.inconsistencyFound ||
           /inconsist|lie|contradict|doesn't add up/i.test(playerText),
-        conversationHistory: [
-          ...updatedHistory,
-          {role: 'suspect', content: data.response},
-        ],
+        conversationHistory: [...updatedHistory, suspectEntry],
         memorySummary: data.memory?.summary ?? gameState.memorySummary,
         memoryLedger: data.memory?.ledger ?? gameState.memoryLedger,
       });
