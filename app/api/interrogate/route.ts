@@ -22,6 +22,7 @@ type MemoryState = {
 
 interface InterrogateRequest {
   name: {first: string; last: string};
+  victim: {name: string; descriptor: string};
   crimeSpec: string;
   alibiSpec: string;
   motiveKnown: boolean;
@@ -75,6 +76,7 @@ export async function POST(request: NextRequest) {
 
     const systemPrompt = buildSystemPrompt({
       name: body.name,
+      victim: body.victim,
       crimeSpec: body.crimeSpec,
       alibiSpec: body.alibiSpec,
       motiveKnown: body.motiveKnown,
