@@ -1,3 +1,7 @@
+// Re-export chat functionality to provide single import entry point
+export {chat} from './ai/index';
+export type {ChatMessage} from './ai/types';
+
 /**
  * Calls the configured AI provider (Meta Llama or Groq) with system
  * and user prompts. Parses response and extracts JSON metadata footer.
@@ -68,9 +72,6 @@ export async function callMetaLlama(
 
   return parseResponse(fullText);
 }
-
-export {chat} from './ai/index';
-export type {ChatMessage} from './ai/types';
 
 /**
  * Parses AI response text and extracts JSON metadata footer.
