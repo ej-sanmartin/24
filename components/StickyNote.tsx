@@ -54,14 +54,6 @@ export default function StickyNote({
             </div>
 
             <div>
-              <span className="font-semibold">Victim:</span>
-              <br className="md:block max-md:hidden" />
-              <span className="max-md:ml-1 max-md:block">
-                {victim.name} ({victim.descriptor})
-              </span>
-            </div>
-
-            <div>
               <span className="font-semibold">Crime:</span>
               <br className="md:block max-md:hidden" />
               <span className="max-md:ml-1 max-md:block">
